@@ -14,6 +14,7 @@ client = WebClient(token=SLACK_BOT_TOKEN)
 @app.route("/slack/events", methods=["POST"])
 def slack_events():
     data = request.json
+    print("Received data:", data)  # ← 追加（Slackからの全データを表示）
 
     # SlackのURL確認用 challenge 対応
     if "challenge" in data:
@@ -21,6 +22,8 @@ def slack_events():
 
     if "event" in data:
         event = data["event"]
+        print("Slack Event:", event)  # ← 追加（イベント部分の表示）
+
         if event.get("type") == "message" and "subtype" not in event:
             channel = event["channel"]
             text = event["text"]
